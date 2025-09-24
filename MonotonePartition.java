@@ -1,3 +1,5 @@
+// GroupID-19 (Komal 22113078_Dhruv 22114029_Himanshu Raheja22323023)
+// Date: September 24, 2025
 // MonotonePartition.java - This file contains algorithm for partitioning a simple
 // polygon into monotone polygons using sweep line paradigm and trapezoidalization
 
@@ -29,7 +31,6 @@ public class MonotonePartition {
             cur_edge = cur_edge.next();
         }while(cur_edge.id() != polygon.rep_edge().id());
 
-        // Initializing the data structures
         this.partition = new TreeMap<Integer,DoublyConnectedEdgeList>();
         partition.put(polygon.id(),polygon);
         this.trapezoidalization = new ArrayList<Edge>();
@@ -48,13 +49,10 @@ public class MonotonePartition {
         }
     }
     
-    // MODIFIED: Added getter for the diagonals list
     public ArrayList<Edge> getDiagonals() {
         return this.diagonals;
     }
 
-    // --- HELPER METHOD TO STORE DIAGONALS ---
-    // This helper function simplifies adding diagonals before calling connect.
     private void addAndConnect(DoublyConnectedEdgeList.Node v_i, DoublyConnectedEdgeList.Node helper_v, DoublyConnectedEdgeList.DCEL_Edge e_prev, DoublyConnectedEdgeList.DCEL_Edge e_next, DoublyConnectedEdgeList polygonToSplit) {
         diagonals.add(new Edge(new Vertex(v_i), new Vertex(helper_v)));
         DoublyConnectedEdgeList newDCEL = polygonToSplit.connect(v_i, helper_v, e_prev, e_next);
@@ -180,8 +178,6 @@ public class MonotonePartition {
             }
         }
         
-    // (The rest of the code is unchanged)
-    
     static private enum VertexType {
         START,
         END,

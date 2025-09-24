@@ -1,13 +1,19 @@
+// GroupID-19 (Komal 22113078_Dhruv 22114029_Himanshu Raheja22323023)
+// Date: September 24, 2025
+// DoublyConnectedEdgeList.java - This file contains the definition of DCEL
+// data structure and its member variables, it also contains the member functions
+// like edge insertion.
+
 import java.util.*;
 
 public class DoublyConnectedEdgeList {
 
-    private DCEL_Edge rep_edge;
-    private int id;
-    private static int DCEL_count = 0;
-    private static int edge_count = 0;
-    private static int node_count = 0;
-    private static final double eps = 1e-4;
+    private DCEL_Edge rep_edge; //representative edge
+    private int id;  //assigned number to DCEL
+    private static int DCEL_count = 0;  //number of DCELs
+    private static int edge_count = 0;  //number of edges
+    private static int node_count = 0;  //number of nodes
+    private static final double eps = 1e-4; //epsilon for floating point comparisons
 
     public DoublyConnectedEdgeList() {
         this.rep_edge = null;
@@ -317,7 +323,6 @@ public class DoublyConnectedEdgeList {
 
       return newDCEL;
     }
-
     public static class Node {
         private double x,y;
         private TreeSet<SimplePair<Double,DCEL_Edge> > IncidentEdges;

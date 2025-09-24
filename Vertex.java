@@ -1,3 +1,6 @@
+// GroupID-19 (Komal 22113078_Dhruv 22114029_Himanshu Raheja22323023)
+// Date: September 24, 2025
+
 public class Vertex {
 
 	private double x;
