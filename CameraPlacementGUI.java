@@ -12,15 +12,13 @@ import java.util.Random;
 
 public class CameraPlacementGUI extends JFrame {
 
-    // --- GUI Components ---
     private final CameraPlacementCanvas canvas;
     private final JTextField pointsField;
     private final JButton btnGenerate, btnTrapezoid, btnPartition, btnTriangulate, btnFindCameras, btnReset;
 
-    // --- Algorithm Data (Computed step-by-step) ---
     private ArrayList<Vertex> polygon;
     private DoublyConnectedEdgeList mainDcel;
-    private ArrayList<DoublyConnectedEdgeList> monotonePolygons; // FIXED: Added to store partition results
+    private ArrayList<DoublyConnectedEdgeList> monotonePolygons;
     private ArrayList<DoublyConnectedEdgeList> triangulation;
     private ArrayList<Edge> trapezoids;
     private ArrayList<Edge> partitionDiagonals;
@@ -34,7 +32,6 @@ public class CameraPlacementGUI extends JFrame {
         canvas = new CameraPlacementCanvas();
         add(canvas, BorderLayout.CENTER);
 
-        // --- Control Panel Setup ---
         JPanel controlPanel = new JPanel(new GridLayout(2, 1));
         JPanel topRow = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
         JPanel bottomRow = new JPanel(new FlowLayout(FlowLayout.CENTER, 8, 5));
@@ -78,15 +75,13 @@ public class CameraPlacementGUI extends JFrame {
     }
 
     private void resetToInitialState() {
-        // Clear all data
         polygon = null; mainDcel = null; triangulation = null;
         trapezoids = null; partitionDiagonals = null; cameras = null;
-        monotonePolygons = null; // FIXED: Reset the stored partitions
+        monotonePolygons = null;
         
         canvas.setData(null, null, null);
         canvas.repaint();
 
-        // Reset button states
         pointsField.setEnabled(true);
         btnGenerate.setEnabled(true);
         btnTrapezoid.setEnabled(false);
@@ -121,7 +116,6 @@ public class CameraPlacementGUI extends JFrame {
         MonotonePartition monPart = new MonotonePartition(mainDcel);
         trapezoids = monPart.trapezoidalization();
         partitionDiagonals = monPart.getDiagonals();
-        // FIXED: Store the calculated monotone polygons to be used in the next step
         monotonePolygons = new ArrayList<>(monPart.partition().values());
         
         canvas.setData(polygon, null, null);
@@ -141,13 +135,11 @@ public class CameraPlacementGUI extends JFrame {
     }
 
     private void performStep4_Triangulate() {
-        // FIXED: Check if monotone polygons have been computed and use them.
         if (monotonePolygons == null) {
             System.err.println("Error: Monotone partitions have not been calculated yet.");
             return;
         }
         
-        // FIXED: Use the stored monotonePolygons list, not a new calculation.
         MonotoneTriangulation monTriangulation = new MonotoneTriangulation(monotonePolygons);
         triangulation = monTriangulation.triangulateMonotonePolygon();
 
