@@ -1,3 +1,5 @@
+// GroupID-19 (Komal 22113078_Dhruv 22114029_Himanshu Raheja22323023)
+// Date: September 24, 2025
 // MonotoneTriangulation.java - This file contains algorithm for triangulation
 // of a monotone polygon in linear time.
 
@@ -15,19 +17,17 @@ public class MonotoneTriangulation {
     this.monotonePolygons = monotonePolygons;
   }
 
-  //computes ccw between vectors one->two and two->three
   public boolean CCW(DoublyConnectedEdgeList.Node one, DoublyConnectedEdgeList.Node two, DoublyConnectedEdgeList.Node three) {
-    double x1,y1,x2,y2; //x1,y1 are the new coordinates of b; x2,y2 are the new coordinates of c
-    x1 = two.x()-one.x(); //move a to origin such that we are concerned with coordinates of b only
-    y1 = two.y()-one.y(); //move a to origin such that we are concerned with coordinates of b only
-    x2 = three.x()-two.x(); //move b to origin such that we are concerned with coordinates of c only
-    y2 = three.y()-two.y(); //move b to origin such that we are concerned with coordinates of c only
+    double x1,y1,x2,y2; 
+    x1 = two.x()-one.x(); 
+    y1 = two.y()-one.y(); 
+    x2 = three.x()-two.x();
+    y2 = three.y()-two.y();
     if((x1*y2-x2*y1) < 0.0)
       return true;
     return false;
   }
 
-  //computes the smaller angle between the vectors a->b and b->c
   public double calculateAngleUtil(DoublyConnectedEdgeList.Node a, DoublyConnectedEdgeList.Node b, DoublyConnectedEdgeList.Node c) {
     double x1,y1,x2,y2;
     x1 = b.x()-a.x();
@@ -38,7 +38,6 @@ public class MonotoneTriangulation {
     return angle;
   }
 
-  //computes the interior angle of vertex b such the the adjoining edges are a->b and b->c
   public double calculateAngle(DoublyConnectedEdgeList.Node a, DoublyConnectedEdgeList.Node b, DoublyConnectedEdgeList.Node c) {
     double x1,y1,x2,y2;
     x1 = b.x()-a.x();
@@ -61,13 +60,11 @@ public class MonotoneTriangulation {
     if(this.monotonePolygons != null) {
       for(DoublyConnectedEdgeList monotoneDCEL: this.monotonePolygons) {
 
-        //initializations
         DoublyConnectedEdgeList.DCEL_Edge temp = monotoneDCEL.rep_edge();
         DoublyConnectedEdgeList.DCEL_Edge topEdge = monotoneDCEL.rep_edge();
         DoublyConnectedEdgeList.Node top = temp.origin();
         temp = temp.next();
 
-        //Determine the edge starting from top Node
         while(temp.id() != monotoneDCEL.rep_edge().id()) {
           if(temp.origin().y() > top.y()) {
             top = temp.origin();
@@ -95,7 +92,6 @@ public class MonotoneTriangulation {
             isLeft.put(temp.origin().id(),false);
           }
 
-          //Calculate the interior angle
           interiorAngle.put(temp.origin().id(),calculateAngle(temp.prev().origin(),temp.origin(),temp.next().origin()));
           current = temp.origin();
           temp = temp.next();
@@ -129,14 +125,12 @@ public class MonotoneTriangulation {
           pi = pQueue.poll();
           ph = stack.peek();
 
-          //if pi is adjacent to previous node
           if((isLeft.get(pi.id()) && isLeft.get(ph.id())) || (!isLeft.get(ph.id()) && !isLeft.get(pi.id()))) {
             while(!isReflex.get(ph.id()) && stack.size() >= 2){
               tempNode = stack.peek();
               stack.pop();
               ph = stack.peek();
 
-              //Maintain counterclockwise nature of nodes
               if(isLeft.get(pi.id())){
                 triangles.add(new DoublyConnectedEdgeList.Triangle(pi,ph,tempNode,DoublyConnectedEdgeList.DCEL_count()));
               }
@@ -144,7 +138,6 @@ public class MonotoneTriangulation {
                 triangles.add(new DoublyConnectedEdgeList.Triangle(pi,tempNode,ph,DoublyConnectedEdgeList.DCEL_count()));
               }
 
-              //Update the interior angle of the vertex ph, works for both left and right vertices
               if(isLeft.get(pi.id())){
                 double deltaAnglePh = Math.PI -calculateAngleUtil(pi,ph,tempNode);
                 interiorAngle.put(ph.id(),interiorAngle.get(ph.id())-deltaAnglePh);
@@ -174,7 +167,6 @@ public class MonotoneTriangulation {
             boolean angleChangeFlag = true;
             DoublyConnectedEdgeList.Node nodeToBePushed = null;
 
-            //add diagonals to the nodes in other sides
             while(stack.size() >= 2) {
               tempNode = stack.peek();
 
@@ -188,7 +180,6 @@ public class MonotoneTriangulation {
                 triangles.add(new DoublyConnectedEdgeList.Triangle(pi,stack.peek(),tempNode,DoublyConnectedEdgeList.DCEL_count()));
               }
 
-              //angle change needs to be computed only once
               if(angleChangeFlag) {
 
                 if(isLeft.get(pi.id())) {

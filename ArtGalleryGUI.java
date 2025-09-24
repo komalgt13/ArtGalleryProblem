@@ -1,19 +1,22 @@
+// GroupID-19 (Komal 22113078_Dhruv 22114029_Himanshu Raheja22323023)
+// Date: September 24, 2025
+// ArtGalleryGUI.java - Main GUI for 7-step visualization of the Art Gallery Problem.
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
 import java.util.TreeMap;
+import java.util.Collections;
 
 public class ArtGalleryGUI extends JFrame {
 
-    // --- GUI Components ---
-    private final DrawingCanvas canvas;
+    private final ArtGalleryCanvas canvas;
     private final JTextField pointsField;
     private final JButton btnStep1, btnStep2, btnStep3, btnStep4, btnStep5, btnStep6, btnStep7;
     private final JButton btnReset;
 
-    // --- Algorithm Data (Computed progressively) ---
     private ArrayList<Vertex> polygonVertices;
     private DoublyConnectedEdgeList mainDCEL;
     private ArrayList<Edge> trapezoids;
@@ -29,10 +32,9 @@ public class ArtGalleryGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout(10, 10));
 
-        canvas = new DrawingCanvas();
+        canvas = new ArtGalleryCanvas();
         add(canvas, BorderLayout.CENTER);
 
-        // --- Control Panel Setup with 7 Steps ---
         JPanel controlPanel = new JPanel(new GridLayout(2, 1));
         JPanel topRow = new JPanel(new FlowLayout(FlowLayout.CENTER, 8, 5));
         JPanel bottomRow = new JPanel(new FlowLayout(FlowLayout.CENTER, 8, 5));
